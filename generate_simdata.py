@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import yaml
 from tqdm import tqdm
 from utils import set_seed
+import potentials
 
 
 def sample_gp2d(
@@ -202,7 +203,7 @@ def main(args: argparse.Namespace):
     fig.colorbar(m2, loc="t", length=0.75, label="simulated outcome", col=3)
     fig_path = join(args.output_dir, "examples.png")
     fig.format(xlabel="longitude", ylabel="latitude")
-    fig.save(fig_path, dpi=300)
+    #fig.save(fig_path, dpi=300)
 
 
 if __name__ == "__main__":

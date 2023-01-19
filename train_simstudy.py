@@ -15,13 +15,13 @@ from collections import defaultdict, deque
 import yaml
 import wandb
 import utils
-from sghmc import SG_HMC, SG_HMC_Adam
+from sghmc import sghmc #, SG_HMC_Adam
 import torchvision.transforms.functional as vF
 import torch.nn.functional as F
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF
 from scipy.special import expit
-import deprecated.potentials as potentials
+import potentials as potentials
 from patsy import dmatrix
 
 
@@ -213,8 +213,9 @@ def main(args: argparse.Namespace):
         spatial=args.spatial,
         output_decay=0.0
     )
-    kw_w2vec = kw_local.copy(),
-    kw_w2vec_spa = kw_w2vec.copy()
+    kw_local['spatial'] = True
+    kw_w2vec = dict(kw_local)
+    kw_w2vec_spa = dict(kw_w2vec)
     kw_w2vec_spa["spatial"] = True
 
     mkw_local = dict(
@@ -545,9 +546,9 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=10000)
     parser.add_argument("--augment", default=False, action="store_true")
     parser.add_argument("--no_batchnorm", default=False, dest="batchnorm", action="store_false")
-    parser.add_argument("--bntype", type="bn", choices=["bn", "frn"])
+    parser.add_argument("--bntype", type=str, default="bn")
     parser.add_argument("--dropout", default=False, action="store_true")
-    parser.add_argument("--sparse", default=False, action="store_tr ue")
+    parser.add_argument("--sparse", default=False, action="store_true")
     parser.add_argument("--bottleneck", default=False, action="store_true")
     parser.add_argument("--dir", type=str, default="simulations/test")
     parser.add_argument("--output", type=str, default="simlogs")
