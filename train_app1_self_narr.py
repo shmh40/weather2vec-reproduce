@@ -85,8 +85,8 @@ if __name__ == "__main__":
     parser.add_argument("--wdecay", type=int, default=0.0)
     args = parser.parse_args()
 
-    if not args.odir.startswith("results/unsupervised-narr/"):
-        args.odir = os.path.join("results/unsupervised-narr", args.odir)
+    if not args.odir.startswith("/home/jovyan/lustre_scratch/cas/rep_learning/weather2vec/results/unsupervised-narr/"):
+        args.odir = os.path.join("/home/jovyan/lustre_scratch/cas/rep_learning/weather2vec/results/unsupervised-narr", args.odir)
     os.makedirs(args.odir, exist_ok=True)
     # load metadata
     with open(os.path.join(args.odir, "args.yaml"), "w") as io:
